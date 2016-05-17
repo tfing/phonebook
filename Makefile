@@ -3,6 +3,8 @@ CFLAGS_common ?= -Wall -std=gnu99
 CFLAGS_orig = -O0
 CFLAGS_opt  = -O0
 
+LOOP = 10
+
 EXEC = phonebook_orig phonebook_opt
 all: $(EXEC)
 
@@ -19,14 +21,14 @@ phonebook_opt: $(SRCS_common) phonebook_opt.c phonebook_opt.h
 		$(SRCS_common) $@.c
 
 run: $(EXEC)
-	echo 3 | sudo tee /proc/sys/vm/drop_caches
-	watch -d -t "./phonebook_orig && echo 3 | sudo tee /proc/sys/vm/drop_caches"
+	echo 1 | sudo tee /proc/sys/vm/drop_caches
+	watch -d -t "./phonebook_orig && echo 1 | sudo tee /proc/sys/vm/drop_caches"
 
 cache-test: $(EXEC)
-	perf stat --repeat 100 \
+	perf stat --repeat $(LOOP) \
 		-e cache-misses,cache-references,instructions,cycles \
 		./phonebook_orig
-	perf stat --repeat 100 \
+	perf stat --repeat $(LOOP) \
 		-e cache-misses,cache-references,instructions,cycles \
 		./phonebook_opt
 
@@ -37,7 +39,7 @@ plot: output.txt
 	gnuplot scripts/runtime.gp
 
 calculate: calculate.c
-	$(CC) $(CFLAGS_common) $^ -o $@
+	$(CC) $(CFLAGS_common) -DLOOP=$(LOOP) $^ -o $@
 
 .PHONY: clean
 clean:

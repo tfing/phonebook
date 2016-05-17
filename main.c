@@ -41,6 +41,9 @@ int main(int argc, char *argv[])
     pHead = (entry *) malloc(sizeof(entry));
     printf("size of entry : %lu bytes\n", sizeof(entry));
     e = pHead;
+#if defined(OPT_2)
+    e->idx = 0;
+#endif
     e->pNext = NULL;
 
 #if defined(__GNUC__)
@@ -80,7 +83,7 @@ int main(int argc, char *argv[])
     cpu_time2 = diff_in_second(start, end);
 
     FILE *output;
-#if defined(OPT)
+#if defined(OPT) || defined(OPT_2)
     output = fopen("opt.txt", "a");
 #else
     output = fopen("orig.txt", "a");
