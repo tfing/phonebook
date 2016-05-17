@@ -10,7 +10,8 @@
 #ifdef OPT
 typedef struct __PHONE_BOOK_ENTRY {
     //char lastName[MAX_LAST_NAME_SIZE];
-    char firstName[16]; char email[16];
+    char firstName[16];
+    char email[16];
     char phone[10];
     char cell[10];
     char addr1[16];
@@ -44,7 +45,7 @@ typedef struct __PHONE_BOOK_ENTRY {
     //struct __PHONE_BOOK_ENTRY *pNext;
 } detail;
 
-#define NAME_SET 30 
+#define NAME_SET 30
 typedef struct __LAST_NANE_ENTRY {
     char lastNames[NAME_SET][MAX_LAST_NAME_SIZE];
     char lastName[MAX_LAST_NAME_SIZE];

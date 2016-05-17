@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RUN LOOP 
-#define RUN_F (float)LOOP 
+#define RUN LOOP
+#define RUN_F (float)LOOP
 
 int main(void)
 {

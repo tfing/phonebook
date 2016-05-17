@@ -31,14 +31,12 @@ entry *findName(char lastname[], entry *pHead)
 {
     while (pHead != NULL) {
         char idx = 0;
-        while (idx != NAME_SET)
-        {
-        if (strcasecmp(lastname, pHead->lastNames[idx]) == 0)
-        {
-            strcpy(pHead->lastName,pHead->lastNames[idx]);
-            return pHead;
+        while (idx != NAME_SET) {
+            if (strcasecmp(lastname, pHead->lastNames[idx]) == 0) {
+                strcpy(pHead->lastName,pHead->lastNames[idx]);
+                return pHead;
             }
-        idx++;
+            idx++;
         }
         pHead = pHead->pNext;
     }
@@ -47,8 +45,7 @@ entry *findName(char lastname[], entry *pHead)
 
 entry *append(char lastName[], entry *e)
 {
-    if (e->idx == NAME_SET)
-    {
+    if (e->idx == NAME_SET) {
         e->pNext = (entry *) malloc(sizeof(entry));
         e = e->pNext;
         e->idx = 0;
@@ -57,6 +54,6 @@ entry *append(char lastName[], entry *e)
     e->idx++;
 
     return e;
-} 
+}
 
 #endif
