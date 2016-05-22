@@ -20,6 +20,7 @@ phonebook_opt: $(SRCS_common) phonebook_opt.c phonebook_opt.h
 		-DIMPL="\"$@.h\"" -o $@ \
 		$(SRCS_common) $@.c
 
+
 run: $(EXEC)
 	echo 1 | sudo tee /proc/sys/vm/drop_caches
 	watch -d -t "./phonebook_orig && echo 1 | sudo tee /proc/sys/vm/drop_caches"
@@ -43,7 +44,10 @@ plot: output.txt
 calculate: calculate.c
 	$(CC) $(CFLAGS_common) -DLOOP=$(LOOP) $^ -o $@
 
-.PHONY: clean
+.PHONY: clean style
 clean:
 	$(RM) $(EXEC) *.o perf.* \
 	      	calculate orig.txt opt.txt output.txt runtime.png
+style:
+	astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none *.[ch]
+

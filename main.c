@@ -39,12 +39,16 @@ int main(int argc, char *argv[])
     /* build the entry */
     entry *pHead, *e;
     pHead = (entry *) malloc(sizeof(entry));
-    printf("size of entry : %lu bytes\n", sizeof(entry));
+    printf("size of entry : %u bytes\n", sizeof(entry));
     e = pHead;
 #if defined(OPT_2)
     e->idx = 0;
 #endif
     e->pNext = NULL;
+
+#if defined(OPT_HASH)
+    prepareHash(10009);
+#endif
 
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
@@ -83,7 +87,7 @@ int main(int argc, char *argv[])
     cpu_time2 = diff_in_second(start, end);
 
     FILE *output;
-#if defined(OPT) || defined(OPT_2)
+#if defined(OPT) || defined(OPT_2) || defined(OPT_HASH)
     output = fopen("opt.txt", "a");
 #else
     output = fopen("orig.txt", "a");
@@ -93,6 +97,10 @@ int main(int argc, char *argv[])
 
     printf("execution time of append() : %lf sec\n", cpu_time1);
     printf("execution time of findName() : %lf sec\n", cpu_time2);
+
+#if defined(OPT_HASH)
+    // printHashCnt();
+#endif
 
     if (pHead->pNext) free(pHead->pNext);
     free(pHead);
